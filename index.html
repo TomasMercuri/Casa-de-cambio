@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa de cambio</title>
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- BOOTSTRAP ICON -->
+    <link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="./src/styles.css">
+</head>
+<body>
+    <header class="d-flex justify-content-center py-3 border-bottom">
+        <h1 class="text-white">CASA DE CAMBIO</h1>
+    </header>
+
+    <main class="d-flex justify-content-center align-items-center py-5">
+        <div class="container row">
+            <section class="col-8 formulario mx-4">
+                <div class="fecha w-75">
+                    <label class="fs-4 text-center w-100">FECHA: </label>
+                    <input id="fecha-cambio" type="date" class="py-2 px-3 w-100 border">
+                </div>
+
+                <div class="convertidor-moneda w-100 border d-flex justify-content-center align-items-center flex-column p-5 rounded-5 gap-4">
+                    <div class="input-container d-flex gap-3 w-100">
+                        <div class="moneda-para-convertir d-flex flex-column gap-3 w-50">
+                            <label class="fs-4 text-center">MONEDA</label>
+                            <select name="monedaParaConvertir" class="border p-1">
+                            </select>
+                            <input id="dinero-usuario" type="number" class="border py-2 px-3 rounded-4" placeholder="Ingrese el monto aqui...">
+                        </div>
+
+                        <div class="invertir-monedas">
+                            <button id="invertir-monedas" type="button" class="py-1 px-4 border bg-dark rounded-4">
+                                <i class="bi bi-arrow-left-right text-white"></i>
+                            </button>
+                        </div>
+
+                        <div class="moneda-a-convertir d-flex flex-column gap-3 w-50">
+                            <label class="fs-4 text-center">CAMBIO</label>
+                            <select name="monedaAConvertir" class="border p-1">
+                            </select>
+                            <input id="dinero-convertido" type="number" class="border py-2 px-3 rounded-4" disabled>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <button id="convertir" type="button" class="border px-3 py-2 rounded-pill bg-dark text-white">Convertir</button>
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="col-3 lista-cambios mx-4 d-flex flex-column">
+                <p class="fs-5">¿Cuanto vale mi moneda?</p>
+
+                <div class="lista-monedas w-100 d-flex flex-column align-items-center">
+                    <select name="listaMonedas" id="moneda" class="w-100 text-center border py-1 mb-1">
+                        <!-- <option value="EUR" selected>EUR</option> -->
+                    </select>
+                    <button id="calcular" type="button" class="border px-3 py-2 rounded-pill bg-dark text-white mb-2">Calcular</button>
+                </div>
+
+                <ul class="border py-2 px-3 rounded-4">
+                </ul>
+
+            </section>
+        </div>
+    </main>
+
+
+    <script src="./src/main.js"></script>
+</body>
+</html>
