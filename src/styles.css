@@ -1,0 +1,28 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    outline: none;
+}
+
+
+body {
+    background: #000;
+}
+
+main .container section {
+    padding: 50px 30px 50px 30px;
+    background: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    height: 70vh;
+    border-radius: 40px;
+}
+
+main .container ul {
+    list-style: none;
+    width: 90%;
+    overflow-y: auto;
+}
