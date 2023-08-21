@@ -1,7 +1,7 @@
 const SELECTOR_BASE = document.querySelector('select[name="monedaParaConvertir"]');
 const SELECTOR_CAMBIO = document.querySelector('select[name="monedaAConvertir"]');
 const SELECTOR_LISTADO_MONEDAS = document.querySelector('select[name="listaMonedas"]');
-const listadoMonedas = document.querySelector('ul');
+const listadoMonedas = document.querySelector('ul#listado-monedas');
 
 
 function eliminarListadoMonedas(){
@@ -14,6 +14,14 @@ function mostrarListadoMonedas(datos){
         li.textContent = `${moneda}: ${datos.rates[moneda]}`;
         listadoMonedas.appendChild(li);
     });
+}
+
+function seleccionarOpcion(nombreSelector, moneda){
+    document.querySelector(`select[name="${nombreSelector}"] option[value="${moneda}"]`).setAttribute('selected', "");
+}
+
+function deseleccionarOpcion(nombreSelector, moneda){
+    document.querySelector(`select[name="${nombreSelector}"] option[value="${moneda}"]`).removeAttribute('selected', "");
 }
 
 fetch("https://api.exchangerate.host/latest")
@@ -36,7 +44,7 @@ fetch("https://api.exchangerate.host/latest")
 
 
 document.querySelector('button#convertir').addEventListener('click', () => {
-    let fechaDeCambio = document.querySelector('input#fecha-cambio').value || 'latest';
+    const fechaDeCambio = document.querySelector('input#fecha-cambio').value || 'latest';
     const monedaBase = SELECTOR_BASE.value;
     const monedaCambio = SELECTOR_CAMBIO.value;
     const dineroUsuario = document.querySelector('input#dinero-usuario').value;
@@ -58,4 +66,15 @@ document.querySelector('button#calcular').addEventListener('click', () => {
             eliminarListadoMonedas();
             mostrarListadoMonedas(respuesta);
         })
+});
+
+
+document.querySelector('button#invertir-monedas').addEventListener('click', () => {
+    const monedaBase = SELECTOR_BASE.value;
+    const monedaCambio = SELECTOR_CAMBIO.value;
+
+    seleccionarOpcion(SELECTOR_BASE.name, monedaCambio);
+    deseleccionarOpcion(SELECTOR_BASE.name, monedaBase);
+    seleccionarOpcion(SELECTOR_CAMBIO.name, monedaBase);
+    deseleccionarOpcion(SELECTOR_CAMBIO.name, monedaCambio);
 });
