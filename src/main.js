@@ -54,12 +54,14 @@ document.querySelector('button#convertir').addEventListener('click', () => {
     const monedaCambio = SELECTOR_CAMBIO.value;
     const dineroUsuario = document.querySelector('input#dinero-usuario').value;
     
-    fetch(`https://api.exchangerate.host/${fechaDeCambio}?base=${monedaBase}`)
-        .then(respuesta => respuesta.json())
-        .then(respuesta => {
-            const dineroConvertido = dineroUsuario * respuesta.rates[monedaCambio]; 
-            document.querySelector('input#dinero-convertido').value = dineroConvertido;
-        })
+    if(dineroUsuario !== ""){
+        fetch(`https://api.exchangerate.host/${fechaDeCambio}?base=${monedaBase}`)
+            .then(respuesta => respuesta.json())
+            .then(respuesta => {
+                const dineroConvertido = dineroUsuario * respuesta.rates[monedaCambio]; 
+                document.querySelector('input#dinero-convertido').value = dineroConvertido;
+            })
+    }
 });
 
 
