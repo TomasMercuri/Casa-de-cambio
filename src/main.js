@@ -24,6 +24,11 @@ function deseleccionarOpcion(nombreSelector, moneda){
     document.querySelector(`select[name="${nombreSelector}"] option[value="${moneda}"]`).removeAttribute('selected', "");
 }
 
+function invertirTextoDinero(dineroUsuario, dineroConvertido){
+    document.querySelector('input#dinero-usuario').value = dineroConvertido;
+    document.querySelector('input#dinero-convertido').value = dineroUsuario;
+}
+
 fetch("https://api.exchangerate.host/latest")
     .then(respuesta => respuesta.json())
     .then(respuesta => {
@@ -72,9 +77,12 @@ document.querySelector('button#calcular').addEventListener('click', () => {
 document.querySelector('button#invertir-monedas').addEventListener('click', () => {
     const monedaBase = SELECTOR_BASE.value;
     const monedaCambio = SELECTOR_CAMBIO.value;
+    const dineroUsuario = document.querySelector('input#dinero-usuario').value;
+    const dineroConvertido = document.querySelector('input#dinero-convertido').value;
 
     seleccionarOpcion(SELECTOR_BASE.name, monedaCambio);
     deseleccionarOpcion(SELECTOR_BASE.name, monedaBase);
     seleccionarOpcion(SELECTOR_CAMBIO.name, monedaBase);
     deseleccionarOpcion(SELECTOR_CAMBIO.name, monedaCambio);
+    if(dineroConvertido)invertirTextoDinero(dineroUsuario, dineroConvertido);
 });
