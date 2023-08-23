@@ -5,12 +5,7 @@
     outline: none;
 }
 
-
-body {
-    background: #000;
-}
-
-main .container section {
+main section {
     padding: 50px 30px 50px 30px;
     background: #fff;
     display: flex;
@@ -21,8 +16,43 @@ main .container section {
     border-radius: 40px;
 }
 
-main .container ul {
+main ul {
     list-style: none;
     width: 90%;
     overflow-y: auto;
+}
+
+
+
+
+
+
+
+
+@media (max-width: 1200px) {
+    main .formulario {
+        width: 90vw;
+        height: 600px;
+    }
+
+    main .input-container {
+        flex-direction: column;
+    }
+
+    main .moneda-para-convertir, main .moneda-a-convertir {
+        width: 75%;
+    }
+
+    #dinero-usuario, #dinero-convertido {
+        width: 100%;
+    }
+
+    section.lista-cambios {
+        width: 90vw;
+    }
+
+    section #listado-monedas {
+        width: 75%;
+    }
+
 }
