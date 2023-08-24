@@ -10,9 +10,9 @@ function eliminarListadoMonedas(){
 
 function mostrarListadoMonedas(datos){
     Object.keys(datos.rates).forEach(moneda => {
-        const li = document.createElement('li');
-        li.textContent = `${moneda}: ${datos.rates[moneda]}`;
-        listadoMonedas.appendChild(li);
+        const $li = document.createElement('li');
+        $li.textContent = `${moneda}: ${datos.rates[moneda]}`;
+        listadoMonedas.appendChild($li);
     });
 }
 
@@ -34,11 +34,11 @@ fetch("https://api.exchangerate.host/latest")
     .then(respuesta => {
         function crearOpciones(selector, monedaSeleccionada){
             Object.keys(respuesta.rates).forEach(moneda => {
-                const option = document.createElement('option');
-                option.value = moneda;
-                option.textContent = moneda;
-                if(moneda === monedaSeleccionada) option.setAttribute('selected', "");
-                selector.appendChild(option);
+                const $opcion = document.createElement('option');
+                $opcion.value = moneda;
+                $opcion.textContent = moneda;
+                if(moneda === monedaSeleccionada) $opcion.setAttribute('selected', "");
+                selector.appendChild($opcion);
             })
         }
         crearOpciones(SELECTOR_BASE, "ARS");
