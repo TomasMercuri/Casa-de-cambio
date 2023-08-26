@@ -28,8 +28,12 @@ context('Casa de Cambio', () => {
         });
 
         it('Se asegura que se pueda cambiar de opcion.', () => {
-            cy.get('select[name="monedaParaConvertir"]').select('BTC');
-            cy.get('select[name="monedaParaConvertir"] option[value="BTC"]', { timeout: 10000} ).should('be.selected');
+            seleccionarMoneda('monedaParaConvertir', 'BTC');
+            asegurarOpcionSeleccionada('monedaParaConvertir', 'BTC');
+        });
+
+        it('Se asegura que se pueda cambiar de fecha.', () => { 
+            modificarFechaDeCambio('2020-08-10');
         });
 
     });
@@ -38,10 +42,18 @@ context('Casa de Cambio', () => {
 });
 
 
+function seleccionarMoneda(nombreSelector, moneda){
+    cy.get(`select[name=${nombreSelector}]`, { timeout: 10000 }).select(moneda);
+}
+
 function asegurarCantidadOpciones(nombreSelector) {
     cy.get(`select[name="${nombreSelector}"]`, { timeout: 10000 }).find('option').should('have.length.greaterThan', 150);
 }
 
 function asegurarOpcionSeleccionada(nombreSelector, moneda) {
     cy.get(`select[name=${nombreSelector}] option[value="${moneda}"]`).should('be.selected');
+}
+
+function modificarFechaDeCambio(fecha){
+    cy.get('input#fecha-cambio').type(fecha).should('have.value', fecha);
 }
