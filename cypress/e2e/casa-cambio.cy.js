@@ -1,6 +1,7 @@
 /// <reference types="cypress"/>
 
 const URL_CASA_DE_CAMBIO = 'https://tomasmercuri.github.io/Casa-de-cambio/';
+const FECHA = '2021-08-10';
 
 context('Casa de Cambio', () => {
     beforeEach(()=>{
@@ -33,7 +34,49 @@ context('Casa de Cambio', () => {
         });
 
         it('Se asegura que se pueda cambiar de fecha.', () => { 
-            modificarFechaDeCambio('2020-08-10');
+            modificarFechaDeCambio(FECHA);
+            cy.get('input#fecha-cambio').should('have.value', FECHA);
+        });
+
+    });
+
+    describe('Funcionamiento cambios de moneda', () => {
+        it('Se asegura de que la conversion sea correcta (ARS - USD)', () => {
+            modificarFechaDeCambio(FECHA);
+            asegurarOpcionSeleccionada('monedaParaConvertir', 'ARS');
+            asegurarOpcionSeleccionada('monedaAConvertir', 'USD');
+            cy.get('input#dinero-usuario').type('100000');
+            cy.get('button#convertir').click();
+            cy.get('input#dinero-convertido', { timeout: 10000 }).should('have.value', '1030.8');
+        });
+
+        it('Se asegura que se puedan invertir las monedas (USD - ARS)', () => {
+            modificarFechaDeCambio(FECHA);
+            asegurarOpcionSeleccionada('monedaParaConvertir', 'ARS');
+            asegurarOpcionSeleccionada('monedaAConvertir', 'USD');
+            cy.get('button#invertir-monedas').click();
+            asegurarOpcionSeleccionada('monedaParaConvertir', 'USD');
+            asegurarOpcionSeleccionada('monedaAConvertir', 'ARS');
+        });
+
+        it('Se asegura de que la conversion sea correcta (USD - ARS).', () => {
+            modificarFechaDeCambio(FECHA);
+            asegurarOpcionSeleccionada('monedaParaConvertir', 'ARS');
+            asegurarOpcionSeleccionada('monedaAConvertir', 'USD');
+            cy.get('button#invertir-monedas').click();
+            cy.get('input#dinero-usuario').type('1');
+            cy.get('button#convertir').click();
+            cy.get('input#dinero-convertido', { timeout: 10000 }).should('have.value', '97.008282');
+        });
+
+        it('Se asegura que al invertir las monedas, no se invierta el texto.', () => {
+            asegurarOpcionSeleccionada('monedaParaConvertir', 'ARS');
+            asegurarOpcionSeleccionada('monedaAConvertir', 'USD');
+            cy.get('button#invertir-monedas').click();
+            asegurarOpcionSeleccionada('monedaParaConvertir', 'USD');
+            asegurarOpcionSeleccionada('monedaAConvertir', 'ARS');
+            cy.get('input#dinero-usuario').type('100000');
+            cy.get('input#dinero-convertido', { timeout: 10000 }).should('not.have.value');
         });
 
     });
@@ -55,5 +98,5 @@ function asegurarOpcionSeleccionada(nombreSelector, moneda) {
 }
 
 function modificarFechaDeCambio(fecha){
-    cy.get('input#fecha-cambio').type(fecha).should('have.value', fecha);
+    cy.get('input#fecha-cambio').type(fecha);
 }
