@@ -72,10 +72,10 @@ context('Casa de Cambio', () => {
         it('Se asegura que al invertir las monedas, no se invierta el texto.', () => {
             asegurarOpcionSeleccionada('monedaParaConvertir', 'ARS');
             asegurarOpcionSeleccionada('monedaAConvertir', 'USD');
+            cy.get('input#dinero-usuario').type('100000');
             cy.get('button#invertir-monedas').click();
             asegurarOpcionSeleccionada('monedaParaConvertir', 'USD');
             asegurarOpcionSeleccionada('monedaAConvertir', 'ARS');
-            cy.get('input#dinero-usuario').type('100000');
             cy.get('input#dinero-convertido', { timeout: 10000 }).should('not.have.value');
         });
 
