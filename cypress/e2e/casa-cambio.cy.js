@@ -82,6 +82,28 @@ context('Casa de Cambio', () => {
     });
 
 
+    describe('Listado de monedas', () => {
+        it('Se asegura que existan todas las monedas', () => {
+            cy.get('ul#listado-monedas').find('li').should('have.length', 169);
+        });
+
+        it('Se asegura que la moneda seleccionada aparezca en el listado con el valor de "1".', () => {
+            cy.get('ul#listado-monedas').find('li').each(elementoLi => {
+                if(elementoLi.text() === 'EUR: 1'){
+                    cy.get(elementoLi).should('contain.text', 'EUR: 1');
+                }
+            });
+        });
+
+        it('Se asegura que se pueda cambiar de moneda seleccionada.', () => {
+            seleccionarMoneda('listaMonedas', 'ARS');
+            cy.get('button#calcular').click();
+            asegurarOpcionSeleccionada('listaMonedas', 'ARS');
+        });
+
+    });
+
+
 });
 
 
@@ -90,7 +112,7 @@ function seleccionarMoneda(nombreSelector, moneda){
 }
 
 function asegurarCantidadOpciones(nombreSelector) {
-    cy.get(`select[name="${nombreSelector}"]`, { timeout: 10000 }).find('option').should('have.length.greaterThan', 150);
+    cy.get(`select[name="${nombreSelector}"]`, { timeout: 10000 }).find('option').should('have.length', 169);
 }
 
 function asegurarOpcionSeleccionada(nombreSelector, moneda) {
