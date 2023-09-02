@@ -79,6 +79,18 @@ context('Casa de Cambio', () => {
             cy.get('input#dinero-convertido', { timeout: 10000 }).should('not.have.value');
         });
 
+        it('Se asegura que al ingresar un valor incorrecto, se muestre un "error".', () => {
+            cy.get('input#dinero-usuario').type('-120');
+            cy.get('button#convertir').click();
+            cy.get('input#dinero-usuario').should('have.class', 'border-danger');
+        });
+
+        it('Se asegura que al ingresar un valor correcto, se oculte el "error".', () => {
+            cy.get('input#dinero-usuario').type('1');
+            cy.get('button#convertir').click();
+            cy.get('input#dinero-usuario').should('not.have.class', 'border-danger');
+        });
+
     });
 
 
