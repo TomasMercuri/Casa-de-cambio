@@ -29,6 +29,15 @@ function invertirTextoDinero(dineroUsuario, dineroConvertido){
     document.querySelector('input#dinero-convertido').value = dineroUsuario;
 }
 
+function mostrarError(){
+    document.querySelector('input#dinero-usuario').classList.add('border-danger');
+}
+
+function ocultarError(){
+    document.querySelector('input#dinero-usuario').classList.remove('border-danger');
+}
+
+
 fetch("https://api.exchangerate.host/latest")
     .then(respuesta => respuesta.json())
     .then(respuesta => {
@@ -54,13 +63,16 @@ document.querySelector('button#convertir').addEventListener('click', () => {
     const monedaCambio = SELECTOR_CAMBIO.value;
     const dineroUsuario = document.querySelector('input#dinero-usuario').value;
     
-    if(dineroUsuario !== ""){
+    if(dineroUsuario > 0){
+        ocultarError();
         fetch(`https://api.exchangerate.host/${fechaDeCambio}?base=${monedaBase}`)
             .then(respuesta => respuesta.json())
             .then(respuesta => {
                 const dineroConvertido = dineroUsuario * respuesta.rates[monedaCambio]; 
                 document.querySelector('input#dinero-convertido').value = dineroConvertido;
             })
+    }else{
+        mostrarError();
     }
 });
 
